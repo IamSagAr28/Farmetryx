@@ -58,24 +58,19 @@ populateStateList();
 const API_BASE_URL = window.location.origin;
 
 // Market Price Checker
-const marketPriceForm = document.getElementById('market-price-form');
-const priceError = document.getElementById('price-error');
-
-marketPriceForm.addEventListener('submit', async (e) => {
+searchBtn.addEventListener('click', async (e) => {
     e.preventDefault();
     
-    const crop = document.getElementById('crop').value.trim();
-    const state = document.getElementById('state').value;
+    const crop = cropSearch.value.trim();
+    const state = stateSelect.value;
     
     if (!crop) {
-        priceError.textContent = 'Please enter a crop name';
-        priceError.style.display = 'block';
+        priceTableBody.innerHTML = '<tr><td colspan="6" class="error">Please enter a crop name</td></tr>';
         return;
     }
     
     try {
         priceTableBody.innerHTML = '<tr><td colspan="6" class="loading">Loading market prices...</td></tr>';
-        priceError.style.display = 'none';
         
         const response = await fetch(`${API_BASE_URL}/api/market-prices?crop=${encodeURIComponent(crop)}&state=${encodeURIComponent(state)}`);
         
@@ -88,8 +83,6 @@ marketPriceForm.addEventListener('submit', async (e) => {
     } catch (error) {
         console.error('Error fetching market prices:', error);
         priceTableBody.innerHTML = `<tr><td colspan="6" class="error">Error: ${error.message}</td></tr>`;
-        priceError.textContent = 'Failed to fetch market prices. Please try again.';
-        priceError.style.display = 'block';
     }
 });
 
@@ -98,7 +91,7 @@ function displayMarketPrices(data) {
     const priceTableBody = document.getElementById('price-table-body');
     
     if (!data || !Array.isArray(data) || data.length === 0) {
-        priceTableBody.innerHTML = '<tr><td colspan="6">No market prices found for the selected crop and state</td></tr>';
+        priceTableBody.innerHTML = '<tr><td colspan="6" class="no-data-row"><div class="no-data"><i class="fas fa-info-circle"></i>No market prices found for the selected crop and state</div></td></tr>';
         return;
     }
 
@@ -135,9 +128,11 @@ function displayMarketPrices(data) {
             const noDataRow = document.createElement('tr');
             noDataRow.className = 'no-data-row';
             noDataRow.innerHTML = `
-                <td colspan="6" class="no-data">
-                    <i class="fas fa-info-circle"></i>
-                    No market data available for this district
+                <td colspan="6">
+                    <div class="no-data">
+                        <i class="fas fa-info-circle"></i>
+                        No market data available for this district
+                    </div>
                 </td>
             `;
             priceTableBody.appendChild(noDataRow);

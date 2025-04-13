@@ -471,11 +471,14 @@ main::before {
     padding: 1.5rem;
     margin-top: 2rem;
     overflow-x: auto;
+    position: relative;
+    z-index: 1;
 }
 
 .price-results table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     margin-top: 1rem;
     table-layout: fixed;
 }
@@ -488,12 +491,14 @@ main::before {
     font-weight: 500;
     position: sticky;
     top: 0;
+    z-index: 2;
 }
 
 .price-results td {
     padding: 1rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     vertical-align: middle;
+    word-wrap: break-word;
 }
 
 /* District Header Styles */
@@ -501,11 +506,15 @@ main::before {
     background: var(--primary-light);
     color: white;
     font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .district-header td {
     padding: 1rem;
     border-bottom: 2px solid var(--primary-dark);
+    background: var(--primary-light);
 }
 
 .district-header i {
@@ -517,19 +526,27 @@ main::before {
 .price-row {
     background: white;
     transition: var(--transition);
+    position: relative;
 }
 
 .price-row:hover {
     background: rgba(0, 0, 0, 0.02);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* Trend Row Styles */
 .trend-row {
     background: rgba(0, 0, 0, 0.02);
+    transition: var(--transition);
+}
+
+.trend-row:hover {
+    background: rgba(0, 0, 0, 0.04);
 }
 
 .trend-row td {
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
     font-size: 0.9rem;
 }
 
@@ -537,10 +554,11 @@ main::before {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-weight: 500;
     margin-right: 1rem;
+    transition: var(--transition);
 }
 
 .trend.rising {
@@ -565,6 +583,28 @@ main::before {
 .insight {
     color: var(--text-light);
     font-style: italic;
+    padding: 0.5rem 0;
+    display: block;
+}
+
+/* No Data Message */
+.no-data-row {
+    text-align: center;
+    padding: 2rem;
+}
+
+.no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.no-data i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
 }
 
 /* Disease Detection Section */
