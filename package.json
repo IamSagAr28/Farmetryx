@@ -1,0 +1,23 @@
+{
+  "name": "agrisaarthi",
+  "version": "1.0.0",
+  "description": "A comprehensive agricultural assistance platform for farmers",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js --ignore public/",
+    "serve": "http-server ./public -p 3000"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1",
+    "tesseract.js": "^6.0.1"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "nodemon": "^3.0.2"
+  }
+}

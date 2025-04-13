@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmetryx - Smart Agricultural Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-name">Farmetryx</span>
+                    <span class="logo-tagline">Smart Farming</span>
+                </div>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="nav-links">
+            <a href="#market-prices" class="active">
+                <i class="fas fa-chart-line"></i>
+                <span>Market Prices</span>
+            </a>
+            <a href="#disease-detection">
+                <i class="fas fa-microscope"></i>
+                <span>Disease Detection</span>
+            </a>
+            <a href="#expense-tracker">
+                <i class="fas fa-calculator"></i>
+                <span>Expense Tracker</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Farmetryx</h1>
+            <p>Your Smart Agricultural Assistant for Modern Farming</p>
+            <div class="hero-features">
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Market Price Tracking</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-microscope"></i>
+                    <span>Crop Disease Detection</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-calculator"></i>
+                    <span>Expense Management</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Agricultural Landscape">
+        </div>
+    </div>
+
+    <main>
+        <section id="market-prices" class="section active">
+            <div class="section-background market-bg"></div>
+            <div class="section-content">
+                <h2><i class="fas fa-chart-line"></i> Market Price Transparency</h2>
+                <div class="price-search">
+                    <div class="search-filters">
+                        <input type="text" id="crop-search" placeholder="Search for a crop..." list="crop-list">
+                        <select id="state-select">
+                            <option value="">All States</option>
+                        </select>
+                        <button id="search-btn">
+                            <i class="fas fa-search"></i>
+                            Search
+                        </button>
+                    </div>
+                </div>
+                <div class="price-results">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-store"></i> Market</th>
+                                <th><i class="fas fa-seedling"></i> Crop</th>
+                                <th><i class="fas fa-rupee-sign"></i> Price (₹/kg)</th>
+                                <th><i class="fas fa-chart-bar"></i> Price Range</th>
+                                <th><i class="fas fa-map-marker-alt"></i> Location</th>
+                                <th><i class="fas fa-calendar"></i> Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="price-table-body">
+                            <!-- Results will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="disease-detection" class="section">
+            <div class="disease-detection">
+                <h2><i class="fas fa-microscope"></i> Disease Detection</h2>
+                <div class="upload-container">
+                    <div class="upload-area">
+                        <input type="file" id="image-input" accept="image/*" style="display: none;">
+                        <div class="upload-box" id="upload-box">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload or drag and drop an image</p>
+                            <p class="upload-hint">Supported formats: JPG, PNG</p>
+                        </div>
+                        <div class="preview-container" id="preview-container" style="display: none;">
+                            <img id="image-preview" class="image-preview">
+                            <button class="remove-image" id="remove-image">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="loading-indicator" id="loading" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Analyzing image...</p>
+                    </div>
+                    
+                    <div class="error-indicator" id="error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p></p>
+                    </div>
+                    
+                    <div class="result-container" id="result-container" style="display: none;">
+                        <div class="disease-info">
+                            <h3 id="disease-name">Disease Name</h3>
+                            <p id="confidence" class="confidence">Confidence: 0%</p>
+                            <p id="disease-description" class="description"></p>
+                        </div>
+                        
+                        <div class="symptoms">
+                            <h4>Symptoms</h4>
+                            <ul id="symptoms-list"></ul>
+                        </div>
+                        
+                        <div class="treatment">
+                            <h4>Treatment</h4>
+                            <ul id="treatment-list"></ul>
+                        </div>
+                        
+                        <div class="prevention">
+                            <h4>Prevention</h4>
+                            <ul id="prevention-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="expense-tracker" class="section">
+            <div class="section-background expense-bg"></div>
+            <div class="section-content">
+                <h2><i class="fas fa-calculator"></i> Farm Expense Tracker</h2>
+                <form id="expense-form" class="expense-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="expense-type">Type</label>
+                        <select id="expense-type" required>
+                            <option value="expense">Expense</option>
+                            <option value="income">Income</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="expense-category">Category</label>
+                        <select id="expense-category" required>
+                            <option value="seeds">Seeds</option>
+                            <option value="fertilizers">Fertilizers</option>
+                            <option value="pesticides">Pesticides</option>
+                            <option value="equipment">Equipment</option>
+                            <option value="labor">Labor</option>
+                            <option value="transport">Transport</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="expense-amount">Amount</label>
+                        <input type="number" id="expense-amount" required min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="expense-description">Description</label>
+                        <input type="text" id="expense-description" required>
+                    </div>
+                    <button type="button" class="submit-btn">
+                        <i class="fas fa-plus"></i>
+                        Add Transaction
+                    </button>
+                </form>
+                <div class="expense-summary">
+                    <div class="summary-card">
+                        <h3><i class="fas fa-arrow-up"></i> Total Income</h3>
+                        <p id="total-income">₹0</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3><i class="fas fa-arrow-down"></i> Total Expenses</h3>
+                        <p id="total-expense">₹0</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3><i class="fas fa-balance-scale"></i> Balance</h3>
+                        <p id="balance">₹0</p>
+                    </div>
+                </div>
+                <div class="transaction-history">
+                    <h3><i class="fas fa-history"></i> Transaction History</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-calendar"></i> Date</th>
+                                <th><i class="fas fa-tags"></i> Type</th>
+                                <th><i class="fas fa-info-circle"></i> Description</th>
+                                <th><i class="fas fa-rupee-sign"></i> Amount</th>
+                                <th><i class="fas fa-trash"></i> Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-history">
+                            <!-- Transactions will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Farmetryx</h3>
+                <p>Your Smart Agricultural Assistant for Modern Farming</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#market-prices">Market Prices</a></li>
+                    <li><a href="#disease-detection">Disease Detection</a></li>
+                    <li><a href="#expense-tracker">Expense Tracker</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> support@farmetryx.com</li>
+                    <li><i class="fas fa-phone"></i> +91 1234567890</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra, India</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p><i class="fas fa-copyright"></i> 2024 Farmetryx. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
