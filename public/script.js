@@ -54,48 +54,42 @@ function populateStateList() {
 // Initialize state dropdown
 populateStateList();
 
+// API Configuration
+const API_BASE_URL = window.location.origin;
+
 // Market Price Checker
-document.getElementById('search-btn').addEventListener('click', async () => {
-    const crop = document.getElementById('crop-search').value;
-    const state = document.getElementById('state-select').value;
+const marketPriceForm = document.getElementById('market-price-form');
+const priceError = document.getElementById('price-error');
+
+marketPriceForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const crop = document.getElementById('crop').value.trim();
+    const state = document.getElementById('state').value;
     
     if (!crop) {
-        alert('Please enter a crop name');
+        priceError.textContent = 'Please enter a crop name';
+        priceError.style.display = 'block';
         return;
     }
     
     try {
-        // Show loading state
-        const priceTableBody = document.getElementById('price-table-body');
         priceTableBody.innerHTML = '<tr><td colspan="6" class="loading">Loading market prices...</td></tr>';
+        priceError.style.display = 'none';
         
-        const response = await fetch(`http://localhost:3000/api/market-prices?crop=${encodeURIComponent(crop)}${state ? `&state=${encodeURIComponent(state)}` : ''}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            mode: 'cors'
-        });
+        const response = await fetch(`${API_BASE_URL}/api/market-prices?crop=${encodeURIComponent(crop)}&state=${encodeURIComponent(state)}`);
         
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const data = await response.json();
         displayMarketPrices(data);
     } catch (error) {
         console.error('Error fetching market prices:', error);
-        const priceTableBody = document.getElementById('price-table-body');
-        priceTableBody.innerHTML = `
-            <tr>
-                <td colspan="6" class="error">
-                    Error fetching market prices. Please try again.
-                    <br>${error.message}
-                </td>
-            </tr>
-        `;
+        priceTableBody.innerHTML = `<tr><td colspan="6" class="error">Error: ${error.message}</td></tr>`;
+        priceError.textContent = 'Failed to fetch market prices. Please try again.';
+        priceError.style.display = 'block';
     }
 });
 
